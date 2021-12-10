@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "101862348315-htu2e1fmj9kq35mbuncv88ppvbbvpn0v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.just.supplier.tankeyes",
+            "certificate_hash": "d50eae5eea69cc96c1ca8b9b3af80827dbcf822f"
+          }
+        },
+        {
+          "client_id": "101862348315-tt08vs5ddv3kafqk30bi9b9rnquiarjj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.just.supplier.tankeyes",
+            "certificate_hash": "3403bebdbf1645f2eefb9f652c958f64b4f777fa"
+          }
+        },
+        {
           "client_id": "101862348315-3hs90jlrk4832sp9a54i3df3jemje258.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -22,6 +38,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyDxa11xH4-zp-bl4b3T6kvbQK_2PR2qUMQ"
+        },
+        {
+          "current_key": "AIzaSyDbuyh7rlVONBs_FqJ7koLLnGmAe2-w7zw"
         }
       ],
       "services": {
@@ -51,6 +70,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyDxa11xH4-zp-bl4b3T6kvbQK_2PR2qUMQ"
+        },
+        {
+          "current_key": "AIzaSyDbuyh7rlVONBs_FqJ7koLLnGmAe2-w7zw"
         }
       ],
       "services": {

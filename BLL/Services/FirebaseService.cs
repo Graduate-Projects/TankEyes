@@ -10,49 +10,45 @@ namespace BLL.Services
 {
     public static class FirebaseService
     {
-        public static async Task<Models.Client> UpdateInfoTank(Guid UserID)
+        public static async Task<Models.Client> GetClient(string UserID)
         {
             try
             {
                 var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
-                var client_info = await firebase.Child("clients").Child(UserID.ToString()).OnceSingleAsync<BLL.Models.Client>();
+                var client_info = await firebase.Child("clients").Child(UserID).OnceSingleAsync<BLL.Models.Client>();
                 return client_info;
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
-        public static async Task<BLL.Models.Client> TriggerPumb(Guid UserID)
+        public static async Task UpdateClient(string UserID, BLL.Models.Client client)
         {
             try
             {
                 var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
-                var client_info = await firebase.Child("clients").Child(UserID.ToString()).OnceSingleAsync<BLL.Models.Client>();
-                client_info.status = !client_info.status;
-                await firebase.Child("clients").Child(UserID.ToString()).PutAsync(Newtonsoft.Json.JsonConvert.SerializeObject(client_info));
-                return client_info;
+                await firebase.Child("clients").Child(UserID).PatchAsync(client);
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
-        public static async Task<BLL.Models.Client> ChangeConfigPumb(Guid UserID,bool IsAllowed)
+        public static async Task<BLL.Models.Client> ChangeConfigPumb(string UserID,bool IsAllowed)
         {
             try
             {
                 var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
-                var client_info = await firebase.Child("clients").Child(UserID.ToString()).OnceSingleAsync<BLL.Models.Client>();
-                client_info.auto = IsAllowed;
-                await firebase.Child("clients").Child(UserID.ToString()).PutAsync(Newtonsoft.Json.JsonConvert.SerializeObject(client_info));
-                return client_info;
+                await firebase.Child("clients").Child(UserID).Child("auto").PutAsync(IsAllowed.ToString());
+                return await GetClient(UserID);
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
+
         public static async Task<IEnumerable<BLL.Models.Supplier>> GetAllSuppliersAsync()
         {
             try
@@ -64,7 +60,7 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
         public static async Task AddNewSupplier(BLL.Models.Supplier supplier)
@@ -76,9 +72,22 @@ namespace BLL.Services
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
-
+        public static async Task AddNewClient(string client_id, Models.Client client_profile)
+        {
+            try
+            {
+                var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
+                var client = new Dictionary<string, Models.Client>();
+                client.Add(client_id, client_profile);
+                await firebase.Child("clients").PutAsync(client);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

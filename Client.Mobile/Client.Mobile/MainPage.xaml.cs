@@ -30,14 +30,16 @@ namespace Client.Mobile
             this.BindingContext = this;
 
             LoadConfigration().ConfigureAwait(false);
-            timer = new Timer();
-            timer.Interval = 100;
+            timer = new Timer
+            {
+                Interval = 100
+            };
             timer.Elapsed += (s, e) => LoadConfigration().ConfigureAwait(false);
             timer.Start();
         }
         public async Task LoadConfigration()
         {
-            Client = await BLL.Services.FirebaseService.UpdateInfoTank(Guid.Parse("dc24bf22-4ba7-4be6-9b7e-261d12dc69a7"));
+            Client = await BLL.Services.FirebaseService.GetClient(AppStatic.ClientID);
             OnPropertyChanged(nameof(MotorToggled));
         }
 
@@ -48,15 +50,18 @@ namespace Client.Mobile
 
         private async void TriggerPumb(object sender, EventArgs e)
         {
-            Client = await BLL.Services.FirebaseService.TriggerPumb(Guid.Parse("dc24bf22-4ba7-4be6-9b7e-261d12dc69a7"));
+            Client.pumb_status = !Client.pumb_status;
+            await BLL.Services.FirebaseService.UpdateClient(AppStatic.ClientID, Client);
+            OnPropertyChanged(nameof(Client));
         }
 
         private async void SwitchChanged(bool Value)
         {
             try
             {
-                var IsAllowedToRunMotorAsAuto = Value;
-                Client = await BLL.Services.FirebaseService.ChangeConfigPumb(Guid.Parse("dc24bf22-4ba7-4be6-9b7e-261d12dc69a7"), IsAllowedToRunMotorAsAuto);
+                Client.auto = Value;
+                await BLL.Services.FirebaseService.UpdateClient(AppStatic.ClientID, Client);
+                OnPropertyChanged(nameof(Client));
             }
             catch (Exception)
             {
