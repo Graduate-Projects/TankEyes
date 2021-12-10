@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:XFMatetrial="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Supplier.Mobile.SingUpPage">
+    <ContentPage.Content>
+        <StackLayout Margin="0" Padding="10" Spacing="10">
+            <Label Text="Create Account" FontAttributes="Bold" FontSize="Large" TextColor="#385D7D" />
+            <StackLayout Margin="0" Padding="10" Spacing="30">
+                <Label Text="create new account" FontSize="Medium" />
+                
+                <XFMatetrial:MaterialTextField Text="{Binding FullName}" Placeholder="Enter your name"
+                                               PlaceholderColor="#385D7D"
+                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+
+                <XFMatetrial:MaterialTextField Text="{Binding PhoneNumber}" Placeholder="Enter your phone number"
+                                               PlaceholderColor="#385D7D" IsEnabled="False"
+                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+
+                <XFMatetrial:MaterialTextField Text="{Binding EstmaiedPrice}" Placeholder="Enter your estmaied price"
+                                               PlaceholderColor="#385D7D" InputType="Numeric"
+                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+
+                <XFMatetrial:MaterialTextField Text="{Binding TankSize}" Placeholder="Enter your tank's size"
+                                               PlaceholderColor="#385D7D" InputType="Numeric"
+                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+                
+                <Button Text="Sing Up" Clicked="SingUpClicked" VerticalOptions="EndAndExpand"
+                        Background="#22A5FD" TextColor="White" 
+                        CornerRadius="5" TextTransform="None" Margin="20,30"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

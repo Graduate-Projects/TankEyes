@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"             
+             BackgroundImageSource="background_app"
+             x:Class="Client.Mobile.SupplierList">
+    <ContentPage.Content>
+        <StackLayout Margin="0" Padding="10" Spacing="0">
+            <CollectionView ItemsSource="{Binding Suppliers}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Margin="0,10" HorizontalOptions="FillAndExpand">
+                            <Frame Margin="0" Padding="0" BackgroundColor="White"
+                               CornerRadius="5" HasShadow="True" BorderColor="#C4C4C4">
+                                <StackLayout Margin="0" Padding="0" Spacing="0">
+                                    <StackLayout Margin="10" Padding="0" Orientation="Horizontal">
+                                        <StackLayout Margin="0" Padding="0" Spacing="10" HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding full_name,StringFormat='Name: {0}'}" TextColor="Black" FontAttributes="Bold"/>
+                                            <Label Text="{Binding phone_number,StringFormat='Phone: {0}'}" TextColor="Black" FontAttributes="Bold"/>
+                                            <StackLayout Orientation="Horizontal" Margin="0" Padding="0" Spacing="0">
+                                                <Label Text="{Binding estimated_price,StringFormat='• Estimated Price: {0}'}" TextColor="Black" HorizontalOptions="StartAndExpand"/>
+                                                <Label Text="{Binding estimated_time,StringFormat='• Estimated Time: {0}'}" TextColor="Black" HorizontalOptions="EndAndExpand"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                        <BoxView HeightRequest="10" WidthRequest="10" CornerRadius="5"
+                                             HorizontalOptions="End" VerticalOptions="Start">
+                                            <BoxView.Triggers>
+                                                <DataTrigger TargetType="BoxView" Binding="{Binding available}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="Green"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="BoxView" Binding="{Binding available}" Value="False">
+                                                    <Setter Property="BackgroundColor" Value="Red"/>
+                                                </DataTrigger>
+                                            </BoxView.Triggers>
+                                        </BoxView>
+                                    </StackLayout>
+                                    <Button Text="Request Order" BackgroundColor="#548CA8" TextColor="White"
+                                            FontSize="Medium" FontAttributes="Bold" TextTransform="None"/>
+                                </StackLayout>
+                            </Frame>
+                            
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

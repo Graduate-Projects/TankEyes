@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:XFMaterial="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Supplier.Mobile.SignInPage">
+    <ContentPage.Content>
+        <StackLayout Margin="0" Padding="10" Spacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Margin="0" Padding="0" Spacing="10" VerticalOptions="CenterAndExpand">
+                <Image Source="emotor" HeightRequest="128" WidthRequest="128" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Welcome Back, Signin to continue" TextColor="Black"
+                       FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                       VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+            <StackLayout Margin="0" Padding="20" Spacing="0" VerticalOptions="EndAndExpand">
+                <XFMaterial:MaterialTextField x:Name="TextPhoneNumber" InputType="Telephone"
+                                              Placeholder="Phone number (Countery Code +962)" PlaceholderColor="#385D7D"
+                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+
+                <Button Text="Send OTP" Background="#22A5FD" TextColor="White" 
+                        CornerRadius="5" TextTransform="None"
+                        Margin="20,30" Clicked="SendOTPCode"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

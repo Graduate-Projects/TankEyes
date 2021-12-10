@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:XFPIN="clr-namespace:XFPINView;assembly=XFPINView"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Supplier.Mobile.OTPVerifyPage">
+    <ContentPage.Content>
+        <StackLayout Margin="0" Padding="10" Spacing="50" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+            <StackLayout Margin="0" Padding="0" Spacing="10" VerticalOptions="Start">
+                <Image Source="emotor" HeightRequest="128" WidthRequest="128" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Verfication" TextColor="Black"
+                       FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                       VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" />
+                <Label Text="you will get a OTP via SMS" TextColor="Black"
+                       FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                       VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+            <StackLayout Margin="0" Padding="20" Spacing="0" VerticalOptions="Start">
+
+                <XFPIN:PINView BoxBackgroundColor="#385D7D" BoxShape="RoundCorner"
+                               PINLength="6" PINValue="{Binding PIN}" Color="White" PINInputType="Numeric" IsPassword="False"
+                               PINEntryCompleted="PINEntryCompleted"/>
+                
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

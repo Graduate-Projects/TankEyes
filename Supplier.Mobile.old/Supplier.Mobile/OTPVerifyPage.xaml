@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:XFPIN="clr-namespace:XFPINView;assembly=XFPINView"
+             x:Class="Supplier.Mobile.OTPVerifyPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <XFPIN:PINView BoxBackgroundColor="#FEDBD0" BoxShape="Squere"
+                            PINLength="6" PINValue="{Binding PIN}" Color="#442C2E"
+                           PINEntryCompleted="PINEntryCompleted"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
