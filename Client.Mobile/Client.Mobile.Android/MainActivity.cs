@@ -14,9 +14,8 @@ using Client.Droid.Services;
 
 namespace Client.Mobile.Droid
 {
-    [Activity(Label = "Tank Eyes", Icon = "@mipmap/ic_launcher", 
-        Theme = "@style/MainTheme", 
-        MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+    [Activity(Label = "Tank Eyes", Icon = "@mipmap/ic_launcher", Theme = "@style/SplashScreen", 
+                MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity,IOnCompleteListener, IApplication
     {
         public static Context Instance { get; internal set; }
@@ -25,6 +24,9 @@ namespace Client.Mobile.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            base.Window.RequestFeature(Android.Views.WindowFeatures.ActionBar);
+            base.SetTheme(Resource.Style.MainTheme);
+
             base.OnCreate(savedInstanceState);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);

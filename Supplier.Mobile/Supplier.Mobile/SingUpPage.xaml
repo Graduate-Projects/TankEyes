@@ -18,13 +18,22 @@
                                                PlaceholderColor="#385D7D" IsEnabled="False"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
 
-                <XFMatetrial:MaterialTextField Text="{Binding EstmaiedPrice}" Placeholder="Enter your estmaied price"
+                <XFMatetrial:MaterialTextField Text="{Binding EstmaiedPrice}" Placeholder="Enter your estmaied price per meter"
                                                PlaceholderColor="#385D7D" InputType="Numeric"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
 
+                <XFMatetrial:MaterialTextField Text="{Binding TankPlateNumber}" Placeholder="Enter your tank's plate number"
+                                               PlaceholderColor="#385D7D" InputType="Numeric"
+                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+                
                 <XFMatetrial:MaterialTextField Text="{Binding TankSize}" Placeholder="Enter your tank's size"
                                                PlaceholderColor="#385D7D" InputType="Numeric"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+                
+                <XFMatetrial:MaterialTextField Text="{Binding TankColor}" Placeholder="Enter your tank's color"
+                                               PlaceholderColor="#385D7D" InputType="Chat"
+                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+                
                 
                 <Button Text="Sing Up" Clicked="SingUpClicked" VerticalOptions="EndAndExpand"
                         Background="#22A5FD" TextColor="White" 

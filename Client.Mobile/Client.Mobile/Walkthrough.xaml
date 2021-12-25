@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CarouselPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Client.Mobile.Walkthrough"
+             xmlns:XFMaterial="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             XFMaterial:MaterialNavigationPage.StatusBarColor="#DC384D">
+    <ContentPage>
+        <StackLayout Margin="10" Padding="10" Spacing="10">
+            <StackLayout Margin="0" Padding="0" Spacing="10">
+
+                <Image Source="scan_qr_code" HorizontalOptions="CenterAndExpand"/>
+                <Label  Text="Welcome to Tank Eyes"  Margin="20,40,10,0" FontSize="Large" 
+                        TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                <Label Text="Monitor water level in your tanks from and control pump"
+                       Margin="20,15,10,0" FontSize="Medium" FontAttributes="None"
+                       TextColor="White" HorizontalTextAlignment="Center"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="0" VerticalOptions="EndAndExpand">
+                <Button Text="Next" Clicked="NextMove"  
+                        TextTransform="None" TextColor="#2774A8"
+                        BackgroundColor="White" FontSize="Medium" CornerRadius="5"
+                        HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage>
+        <StackLayout Margin="10" Padding="10" Spacing="10">
+            <StackLayout Margin="0" Padding="0" Spacing="10">
+
+                <Image Source="supplier_screen" HorizontalOptions="CenterAndExpand"/>
+                <Label  Text="Call Supplier"  Margin="20,40,10,0" FontSize="Large" 
+                        TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                <Label Text="Send a request to the nearest supplier with the lowest price to fill your tank"
+                       Margin="20,15,10,0" FontSize="Medium" FontAttributes="None"
+                       TextColor="White" HorizontalTextAlignment="Center"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="0" VerticalOptions="EndAndExpand">
+                <Button Text="Done" Clicked="ClosePage"  
+                        TextTransform="None" TextColor="#2774A8"
+                        BackgroundColor="White" FontSize="Medium" CornerRadius="5"
+                        HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage>
+        <StackLayout Margin="10" Padding="10" Spacing="10">
+            <StackLayout Margin="0" Padding="0" Spacing="10">
+
+                <Image Source="app_screen" HorizontalOptions="CenterAndExpand"/>
+                <Label  Text="Let's get started"  Margin="20,40,10,0" FontSize="Large"
+                        TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                <Label Text="Scan QR code attached on the back of the device"
+                        Margin="20,15,10,0" FontSize="Medium" FontAttributes="None"
+                       TextColor="White" HorizontalTextAlignment="Center"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="0" VerticalOptions="EndAndExpand">
+                <Button Text="Next" Clicked="NextMove"  
+                        TextTransform="None" TextColor="#2774A8"
+                        BackgroundColor="White" FontSize="Medium" CornerRadius="5"
+                        HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage>
+    <CarouselPage.Background>
+        <!-- StartPoint defaults to (0,0) -->
+        <LinearGradientBrush EndPoint="0,.5">
+            <GradientStop Color="#00243E"
+                          Offset="0.1" />
+            <GradientStop Color="#2774A8"
+                          Offset="1.0" />
+        </LinearGradientBrush>
+    </CarouselPage.Background>
+</CarouselPage>

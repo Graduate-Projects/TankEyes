@@ -22,21 +22,34 @@ namespace Client.Mobile
 
         private void OnScanResult(Result result)
         {
-            Device.BeginInvokeOnMainThread(async () =>
+            try
             {
-                // Stop analysis until we navigate away so we don't keep reading barcodes
-                ZXingScanner.IsAnalyzing = false;
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    // Stop analysis until we navigate away so we don't keep reading barcodes
+                    ZXingScanner.IsAnalyzing = false;
+                    if (Guid.TryParse(result.Text, out Guid output))
+                    {
+                        await Xamarin.Essentials.SecureStorage.SetAsync("ClientID", $"{output}");
 
-                await Xamarin.Essentials.SecureStorage.SetAsync("ClientID", result.Text);
+                        AppStatic.ClientID = $"{output}";
 
-                AppStatic.ClientID = result.Text;
-
-                var client_info = await FirebaseService.GetClient(AppStatic.ClientID);
-                if (client_info == null)
-                    await Navigation.PushAsync(new RegisterInfo());
-                else
-                    App.Current.MainPage = new NavigationPage(new MainPage());
-            });
+                        var client_info = await FirebaseService.GetClient(AppStatic.ClientID);
+                        if (client_info == null)
+                            await Navigation.PushAsync(new RegisterInfo());
+                        else
+                            Application.Current.MainPage = new NavigationPage(new MainPage());
+                    }
+                    else
+                    {
+                        ZXingScanner.IsAnalyzing = true;
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                ZXingScanner.IsAnalyzing = true;
+            }
         }
 
         private void FlashToggle(Button sender, EventArgs e)

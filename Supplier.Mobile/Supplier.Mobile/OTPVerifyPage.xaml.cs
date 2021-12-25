@@ -31,12 +31,17 @@ namespace Supplier.Mobile
                 var result = await _firebaseAuth.SignInWithPhoneNumberVerificationCodeAsync(OTPCode);
                 if (result != null && result.Uid != null)
                 {
+                    await Xamarin.Essentials.SecureStorage.SetAsync("PhoneNumber", PhoneNumber);
                     var suppliers = await BLL.Services.FirebaseService.GetAllSuppliersAsync();
                     var supplierProfile = suppliers.FirstOrDefault(spp => spp.phone_number == PhoneNumber);
-                    if(supplierProfile == null)
+                    if (supplierProfile == null)
+                    {
                         App.Current.MainPage = new SingUpPage(PhoneNumber);
+                    }
                     else
+                    {
                         App.Current.MainPage = new NavigationPage(new MainPage(supplierProfile));
+                    }
                 }
             }
             catch (FirebaseException ex)

@@ -8,7 +8,7 @@
         <StackLayout Margin="0" Padding="10" Spacing="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout Margin="0" Padding="0" Spacing="10" VerticalOptions="CenterAndExpand">
                 <Image Source="emotor" HeightRequest="128" WidthRequest="128" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text="Welcome Back, Signin to continue" TextColor="Black"
+                <Label Text="Start being a memebr of our suppliers" TextColor="Black"
                        FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center"
                        VerticalOptions="CenterAndExpand"  HorizontalOptions="CenterAndExpand" />
             </StackLayout>

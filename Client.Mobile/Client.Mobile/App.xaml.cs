@@ -25,17 +25,25 @@ namespace Client.Mobile
 
         private async Task StartUpPage()
         {
-            var ClientID = await Xamarin.Essentials.SecureStorage.GetAsync("ClientID");
-#if DEBUG
-            AppStatic.ClientID = "dc24bf22-4ba7-4be6-9b7e-261d12dc69a7";
-            MainPage = new NavigationPage(new MainPage());
-#else
-            if(string.IsNullOrEmpty(ClientID))
-                MainPage = new NavigationPage(new QRScanner());
+            var IsFirstTime = await Xamarin.Essentials.SecureStorage.GetAsync("IsFirstTime");
+            if (string.IsNullOrEmpty(IsFirstTime))
+            {
+                MainPage = new Walkthrough();
+            }
             else
+            {
+                var ClientID = await Xamarin.Essentials.SecureStorage.GetAsync("ClientID");
+#if DEBUG
+                AppStatic.ClientID = "dc24bf22-4ba7-4be6-9b7e-261d12dc69a7";
                 MainPage = new NavigationPage(new MainPage());
+#else
+                AppStatic.ClientID = ClientID;
+                if (string.IsNullOrEmpty(ClientID))
+                    MainPage = new NavigationPage(new QRScanner());
+                else
+                    MainPage = new NavigationPage(new MainPage());
 #endif
-
+            }
         }
 
         protected override void OnStart()

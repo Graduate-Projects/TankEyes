@@ -35,6 +35,18 @@ namespace BLL.Services
                 throw ex;
             }
         }
+        public static async Task UpdateSupplier(string UserID, BLL.Models.Supplier client)
+        {
+            try
+            {
+                var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
+                await firebase.Child("suppliers").Child(UserID).PatchAsync(client);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static async Task<BLL.Models.Client> ChangeConfigPumb(string UserID,bool IsAllowed)
         {
             try
@@ -63,12 +75,14 @@ namespace BLL.Services
                 throw ex;
             }
         }
-        public static async Task AddNewSupplier(BLL.Models.Supplier supplier)
+        public static async Task AddNewSupplier(string supplier_id, BLL.Models.Supplier supplier_profile)
         {
             try
             {
                 var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
-                await firebase.Child("suppliers").PostAsync(supplier);
+                var supplier = new Dictionary<string, Models.Supplier>();
+                supplier.Add(supplier_id, supplier_profile);
+                await firebase.Child("suppliers").PatchAsync(supplier);
             }
             catch (Exception ex)
             {
@@ -82,7 +96,7 @@ namespace BLL.Services
                 var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
                 var client = new Dictionary<string, Models.Client>();
                 client.Add(client_id, client_profile);
-                await firebase.Child("clients").PutAsync(client);
+                await firebase.Child("clients").PatchAsync(client);
             }
             catch (Exception ex)
             {

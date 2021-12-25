@@ -1,0 +1,2 @@
+msbuild /t:SignAndroidPackage /p:Configuration=Release Client.Mobile.Android.csproj
+msbuild /t:SignAndroidPackage /p:Configuration=Release Supplier.Mobile.Android.csproj

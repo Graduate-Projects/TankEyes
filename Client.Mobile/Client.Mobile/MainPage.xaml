@@ -6,7 +6,7 @@
              NavigationPage.HasNavigationBar="False"
              x:Class="Client.Mobile.MainPage">
 
-    <StackLayout Margin="0" Padding="10" Spacing="150" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <StackLayout Margin="0" Padding="10" Spacing="80" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <StackLayout Orientation="Horizontal" Margin="0" Padding="0" Spacing="30">
             <StackLayout Margin="0" Padding="0">
                 <Label Text="Water Level" 
@@ -18,14 +18,14 @@
                      HorizontalOptions="Start" VerticalOptions="Start">
                         <Label Text="{Binding Client.main_percentage_water}" 
                    TextColor="White" 
-                   FontSize="Header" 
+                   FontSize="60" 
                    HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>
                         <Label Text="%" 
                    TextColor="White" 
                    FontSize="43" 
                    HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>
                     </StackLayout>
-                    <Label Text="Roof Tank" 
+                    <Label Text="Underground Tank" 
                    TextColor="White" 
                    FontSize="Medium" Margin="10,0,0,0" 
                    HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>
@@ -35,20 +35,26 @@
                 <StackLayout Orientation="Horizontal"  HorizontalOptions="Start" VerticalOptions="Center">
                     <Label Text="{Binding Client.secondary_percentage_water}" 
                    TextColor="White" 
-                   FontSize="63" 
+                   FontSize="50" 
                    HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>
                     <Label Text="%" 
                    TextColor="White" 
                    FontSize="43" 
                    HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>
                 </StackLayout>
-                <Label Text="Underground Tank" 
+                <Label Text="Roof Tank" 
                    TextColor="White" 
                    FontSize="Medium" Margin="10,0,0,0" 
                    HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>
             </StackLayout>
         </StackLayout>
         <StackLayout Margin="0" Padding="0" Spacing="10">
+            <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="Start"
+                     Margin="0" Padding="0" Spacing="0">
+                <Label Text="{Binding Client.estimated_time,StringFormat='Estimated Time: {0:hh\\:mm}'}"
+                       TextColor="White" FontSize="Medium" HorizontalTextAlignment="Start"
+                       IsVisible="{Binding Client.pumb_status}"/>
+            </StackLayout>
             <StackLayout Orientation="Horizontal" Margin="0" Padding="20,10" >
                 <Frame Margin="0" Padding="30,10" BackgroundColor="White" CornerRadius="5"
                HorizontalOptions="StartAndExpand" VerticalOptions="Start">

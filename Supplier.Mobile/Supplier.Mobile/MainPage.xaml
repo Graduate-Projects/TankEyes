@@ -10,7 +10,8 @@
                 <Label Text="{Binding Supplier.phone_number,StringFormat='your phone number is {0}'}" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
             </StackLayout> 
         </Frame>
- 
+        <Button Text="Send Notification To Client" Clicked="SendNotification"/>
+        <Button Text="Toggle Availability" Clicked="ToggleAvailability"/>
     </StackLayout>
 
 </ContentPage>

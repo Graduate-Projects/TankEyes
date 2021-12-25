@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace BLL.Models
 {
@@ -13,13 +14,14 @@ namespace BLL.Models
         public string address { get; set; }
         public double main_percentage { get; set; }
         public double secondary_percentage { get; set; }
-        public string eta { get; set; }
-
+        public int eta { get; set; }
 
         [JsonIgnore]
         public double main_percentage_water => main_percentage * 100;
         [JsonIgnore]
         public double secondary_percentage_water => secondary_percentage * 100;
+        [JsonIgnore]
+        public TimeSpan estimated_time => TimeSpan.FromMinutes(eta);
 
     }
 }

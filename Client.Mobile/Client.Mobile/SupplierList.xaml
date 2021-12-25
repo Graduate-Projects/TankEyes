@@ -17,9 +17,10 @@
                                         <StackLayout Margin="0" Padding="0" Spacing="10" HorizontalOptions="FillAndExpand">
                                             <Label Text="{Binding full_name,StringFormat='Name: {0}'}" TextColor="Black" FontAttributes="Bold"/>
                                             <Label Text="{Binding phone_number,StringFormat='Phone: {0}'}" TextColor="Black" FontAttributes="Bold"/>
-                                            <StackLayout Orientation="Horizontal" Margin="0" Padding="0" Spacing="0">
-                                                <Label Text="{Binding estimated_price,StringFormat='• Estimated Price: {0}'}" TextColor="Black" HorizontalOptions="StartAndExpand"/>
-                                                <Label Text="{Binding estimated_time,StringFormat='• Estimated Time: {0}'}" TextColor="Black" HorizontalOptions="EndAndExpand"/>
+                                            <StackLayout Orientation="Vertical" Margin="0" Padding="0" Spacing="10">
+                                                <Label Text="{Binding estimated_price,StringFormat='• Estimated Price: {0} JD/Meter'}" TextColor="Black" HorizontalOptions="StartAndExpand"/>
+                                                <Label Text="{Binding estimated_time,StringFormat='• Estimated Time: {0}'}" TextColor="Black" 
+                                                       HorizontalOptions="Start"/>
                                             </StackLayout>
                                         </StackLayout>
                                         <BoxView HeightRequest="10" WidthRequest="10" CornerRadius="5"
