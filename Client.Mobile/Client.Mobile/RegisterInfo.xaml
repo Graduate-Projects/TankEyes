@@ -18,10 +18,16 @@
                                                PlaceholderColor="#385D7D"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
 
-                <XFMatetrial:MaterialTextField Text="{Binding Address}" Placeholder="Enter your address"
-                                               PlaceholderColor="#385D7D" InputType="Numeric"
-                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
-
+                <StackLayout Margin="0" Padding="0" Spacing="10">
+                    <XFMatetrial:MaterialLabel Text="Select Region"
+                                       TextColor="DarkGray" FontSize="Medium" FontAttributes="Bold"/>
+                    <XFMatetrial:MaterialCard Margin="0" Padding="3,0" CornerRadius="5" BorderColor="DarkSlateGray">
+                        <Picker x:Name="RegionsPicker" ItemsSource="{Binding Regions}" SelectedItem="{Binding RegionSelected}"
+                                Title="Region" HorizontalOptions="FillAndExpand"
+                                 TextColor="DarkBlue" FontSize="Medium" FontAttributes="Bold"/>
+                    </XFMatetrial:MaterialCard>
+                </StackLayout>
+                
                 <XFMatetrial:MaterialTextField Text="{Binding TankSize}" Placeholder="Enter your tank's dimensions (m^3)"
                                                PlaceholderColor="#385D7D" InputType="Numeric"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>

@@ -1,17 +1,102 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             Background="white"
              x:Class="Supplier.Mobile.MainPage">
 
-    <StackLayout>
-        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-            <StackLayout Margin="0" Padding="0" Spacing="10">
-                <Label Text="{Binding Supplier.full_name,StringFormat='Welcome, {0}'}" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-                <Label Text="{Binding Supplier.phone_number,StringFormat='your phone number is {0}'}" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
-            </StackLayout> 
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Image Source="water_tank" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"
+               Margin="0,0,0,-50"/>
+        <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Frame Margin="0" Padding="20,10" CornerRadius="5" BackgroundColor="#C1F7F7F7" VerticalOptions="Start">
+                <StackLayout Orientation="Horizontal" Margin="0" Padding="0" Spacing="0">
+                    <Label Text="Are you available?"  TextColor="Black"  FontSize="Small"
+                                   VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
+                    <Switch ThumbColor="#F7F6F2" OnColor="#2C7EAE" HorizontalOptions="EndAndExpand"
+                            IsToggled="{Binding Supplier.available}" Toggled="ToggleAvailability"/>
+                </StackLayout>
+            </Frame>
+            <Frame Margin="10" Padding="0" BackgroundColor="White" CornerRadius="5" HasShadow="True" BorderColor="#C4C4C4"
+                   x:Name="InfoOrder" IsVisible="false">
+                <StackLayout Margin="0" Padding="0" Spacing="0">
+                    <StackLayout Margin="10,30" Padding="0" Orientation="Horizontal">
+                        <Image Source="delivery_truck" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"
+                               HeightRequest="64" WidthRequest="64"/>
+                        <StackLayout Margin="10,0" Padding="0" Spacing="10"
+                                     VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding ClientRequest.full_name}" 
+                                   TextColor="Black" FontSize="Medium" FontAttributes="Bold"/>
+                            <StackLayout Orientation="Horizontal" Margin="0" Spacing="10">
+                                <Label Text="{Binding ClientRequest.phone_number}"
+                                       VerticalOptions="Center"
+                                   TextColor="Black" FontSize="Medium" FontAttributes="Bold"/>
+                                <Button Margin="0" Padding="5" HeightRequest="32" WidthRequest="32" CornerRadius="16"
+                                        HorizontalOptions="End" VerticalOptions="Center" 
+                                        ImageSource="telephone" BackgroundColor="Transparent" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer  Command="{Binding DialUpCommand}"/>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0" Padding="0" Spacing="0">
+                        <Button Text="Direction" BackgroundColor="#00CBAB" TextColor="White" FontSize="Medium" 
+                                ImageSource="directions" Padding="10,0"
+                                FontAttributes="Bold" TextTransform="None" HorizontalOptions="FillAndExpand"
+                                Command="{Binding OpenDirectionCommand}"/>
+                        <Button Text="Cancel" BackgroundColor="#FF6A63" TextColor="White" FontSize="Medium" 
+                                ImageSource="cancel" Padding="10,0"
+                                FontAttributes="Bold" TextTransform="None" HorizontalOptions="FillAndExpand"
+                                Command="{Binding CancelledRequestCommand}"/>
+
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+        <Frame Margin="0,-100,0,0" Padding="50,20" CornerRadius="5" 
+                   BackgroundColor="#A1F7F7F7" x:Name="MessageSearch"
+                   HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+            <StackLayout Margin="0" Padding="0" Spacing="20">
+                <ActivityIndicator IsRunning="True" Color="#2C49B5"/>
+                <Label Text="Search..." TextColor="Black"  FontSize="Small"
+                           VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
+            </StackLayout>
         </Frame>
-        <Button Text="Send Notification To Client" Clicked="SendNotification"/>
-        <Button Text="Toggle Availability" Clicked="ToggleAvailability"/>
-    </StackLayout>
+        <Frame Margin="40,0" Padding="0" BackgroundColor="Transparent" IsVisible="false"
+                   HorizontalOptions="Center" VerticalOptions="CenterAndExpand"
+                   x:Name="RequestOrder">
+            <Grid Margin="0" Padding="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Frame Margin="0" Padding="0,50,0,0" Grid.Row="2" CornerRadius="10" BackgroundColor="#D12F51C4">
+                    <StackLayout Margin="10" Padding="0" Spacing="20">
+                        <Image Source="delivery_truck" HorizontalOptions="Center" VerticalOptions="Start"
+                                   HeightRequest="64" WidthRequest="64"/>
+                        <Label Text="There is a new order within your work area, do you want to receive it?"
+                                   TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold"
+                                   FontSize="Medium"/>
+                        <StackLayout Margin="0" Padding="0" Spacing="10">
+                            <Button Text="Accept" TextColor="Black" BackgroundColor="White" CornerRadius="5"
+                                        Command="{Binding AcceptRequestCommand}"/>
+                            <Button Text="Reject" TextColor="white" BackgroundColor="#F12F51C4" CornerRadius="5"
+                                        Command="{Binding RejectRequestCommand}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                <Frame Margin="0" Padding="0" Grid.Row="0" Grid.RowSpan="3"
+                        BackgroundColor="White"
+                        HeightRequest="50" WidthRequest="50" CornerRadius="25"
+                        HorizontalOptions="Center" VerticalOptions="Start">
+                    <Image Source="notification" HeightRequest="32" WidthRequest="32" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Frame>
+            </Grid>
+        </Frame>
+
+    </Grid>
 
 </ContentPage>

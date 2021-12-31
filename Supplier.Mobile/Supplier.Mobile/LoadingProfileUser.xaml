@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Supplier.Mobile.LoadingProfileUser">
+    <ContentPage.Content>
+        <StackLayout Margin="0" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Image Source="logo" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"/>
+            <StackLayout.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#00243E" Offset="0.0" />
+                    <GradientStop Color="#2774A8" Offset="1.0" />
+                </LinearGradientBrush>
+            </StackLayout.Background>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

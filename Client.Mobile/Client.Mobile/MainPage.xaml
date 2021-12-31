@@ -52,8 +52,7 @@
             <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="Start"
                      Margin="0" Padding="0" Spacing="0">
                 <Label Text="{Binding Client.estimated_time,StringFormat='Estimated Time: {0:hh\\:mm}'}"
-                       TextColor="White" FontSize="Medium" HorizontalTextAlignment="Start"
-                       IsVisible="{Binding Client.pumb_status}"/>
+                       TextColor="White" FontSize="Medium" HorizontalTextAlignment="Start"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Margin="0" Padding="20,10" >
                 <Frame Margin="0" Padding="30,10" BackgroundColor="White" CornerRadius="5"

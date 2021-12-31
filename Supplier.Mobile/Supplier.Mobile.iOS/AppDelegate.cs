@@ -23,7 +23,7 @@ namespace Supplier.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Xamarin.Forms.Forms.Init();
-            XF.Material.iOS.Material.Init();
+            XF.Material.iOS.Material.Init(); 
             this.LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

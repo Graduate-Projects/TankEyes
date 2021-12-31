@@ -30,6 +30,9 @@
     <EmbeddedResource Update="RegisterInfo.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="SupplierInfo.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="SupplierList.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

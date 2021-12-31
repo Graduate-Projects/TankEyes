@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,19 +49,40 @@ namespace Supplier.Mobile
             get { return _tankColor; }
             set { _tankColor = value; OnPropertyChanged(); }
         }
-        private string _locationWork;
-        public string LocationWork
+
+        public ObservableCollection<string> Regions { get; set; }
+
+        private string _RegionSelected;
+        public string RegionSelected
         {
-            get { return _locationWork; }
-            set { _locationWork = value; OnPropertyChanged(); }
+            get { return _RegionSelected; }
+            set { _RegionSelected = value; OnPropertyChanged(); }
         }
 
 
         public SingUpPage(string phone_number)
         {
             InitializeComponent();
-            this.BindingContext = this;
+            Regions = new ObservableCollection<string>();
             PhoneNumber = phone_number;
+            this.BindingContext = this;
+            Initialization().ConfigureAwait(false);
+        }
+        private async Task Initialization()
+        {
+            try
+            {
+                using (await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.LoadingDialogAsync($"Get Regions...", Configration.MaterialConfigration.LoadingDialogConfiguration))
+                {
+                    var regions = await BLL.Services.FirebaseService.GetRegionsAsync();
+                    if (regions != null) Regions = new ObservableCollection<string>(regions);
+                    OnPropertyChanged(nameof(Regions));
+                }
+            }
+            catch (Exception ex)
+            {
+                //Utils.Diagnostic.Log(ex);
+            }
         }
 
         private async void SingUpClicked(object sender, EventArgs e)
@@ -78,7 +100,7 @@ namespace Supplier.Mobile
                     available = false,
                     tank_color = TankColor,
                     tank_plate_number = TankPlateNumber,
-                    work_location = LocationWork
+                    work_location = RegionSelected
                 };
                 await BLL.Services.FirebaseService.AddNewSupplier(Uuid, supplierProfile);
                 App.Current.MainPage = new NavigationPage(new MainPage(supplierProfile));

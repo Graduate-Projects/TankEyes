@@ -35,7 +35,7 @@
                        TextColor="White" HorizontalTextAlignment="Center"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Margin="0" VerticalOptions="EndAndExpand">
-                <Button Text="Done" Clicked="ClosePage"  
+                <Button Text="Next" Clicked="NextMove"  
                         TextTransform="None" TextColor="#2774A8"
                         BackgroundColor="White" FontSize="Medium" CornerRadius="5"
                         HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>
@@ -54,7 +54,7 @@
                        TextColor="White" HorizontalTextAlignment="Center"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal" Margin="0" VerticalOptions="EndAndExpand">
-                <Button Text="Next" Clicked="NextMove"  
+                <Button Text="Done" Clicked="ClosePage"  
                         TextTransform="None" TextColor="#2774A8"
                         BackgroundColor="White" FontSize="Medium" CornerRadius="5"
                         HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"/>

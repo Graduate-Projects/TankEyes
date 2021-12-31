@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
-using XF.Material.Forms.Resources;
 using XF.Material.Forms.UI.Dialogs.Configurations;
 
-namespace Mobile.Configration
+namespace Client.Mobile.Configration
 {
-    public static class MaterialConfigration
+    internal class MaterialConfigration
     {
         public static MaterialLoadingDialogConfiguration LoadingDialogConfiguration => new MaterialLoadingDialogConfiguration
         {
@@ -17,7 +16,7 @@ namespace Mobile.Configration
             CornerRadius = 8,
             ScrimColor = Color.FromHex("#232F34").MultiplyAlpha(0.32),
         };
-        public static MaterialAlertDialogConfiguration AlertDialogConfiguration=> new MaterialAlertDialogConfiguration
+        public static MaterialAlertDialogConfiguration AlertDialogConfiguration => new MaterialAlertDialogConfiguration
         {
             BackgroundColor = Color.FromHex("#011A27"),
             TitleTextColor = Color.FromHex("#FFFFFF"),

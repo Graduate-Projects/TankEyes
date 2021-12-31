@@ -7,38 +7,47 @@
     <ContentPage.Content>
         <StackLayout Margin="0" Padding="10" Spacing="10">
             <Label Text="Create Account" FontAttributes="Bold" FontSize="Large" TextColor="#385D7D" />
-            <StackLayout Margin="0" Padding="10" Spacing="30">
-                <Label Text="create new account" FontSize="Medium" />
-                
-                <XFMatetrial:MaterialTextField Text="{Binding FullName}" Placeholder="Enter your name"
+            <ScrollView VerticalScrollBarVisibility="Never">
+                <StackLayout Margin="0" Padding="10" Spacing="30">
+                    <Label Text="create new account" FontSize="Medium" />
+
+                    <XFMatetrial:MaterialTextField Text="{Binding FullName}" Placeholder="Enter your name"
                                                PlaceholderColor="#385D7D"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
 
-                <XFMatetrial:MaterialTextField Text="{Binding PhoneNumber}" Placeholder="Enter your phone number"
+                    <XFMatetrial:MaterialTextField Text="{Binding PhoneNumber}" Placeholder="Enter your phone number"
                                                PlaceholderColor="#385D7D" IsEnabled="False"
+                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
+
+                    <StackLayout Margin="0" Padding="0" Spacing="10">
+                        <XFMatetrial:MaterialCard Margin="0" Padding="3,5" CornerRadius="5" BorderColor="DarkSlateGray">
+                            <Picker x:Name="RegionsPicker" ItemsSource="{Binding Regions}" SelectedItem="{Binding RegionSelected}"
+                                    Title="Region" HorizontalOptions="FillAndExpand" TextColor="Black"/>
+                        </XFMatetrial:MaterialCard>
+                    </StackLayout>
+
+                    <XFMatetrial:MaterialTextField Text="{Binding EstmaiedPrice}" Placeholder="Enter your estmaied price per meter"
+                                               PlaceholderColor="#385D7D" InputType="Numeric"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
 
-                <XFMatetrial:MaterialTextField Text="{Binding EstmaiedPrice}" Placeholder="Enter your estmaied price per meter"
+                    <XFMatetrial:MaterialTextField Text="{Binding TankPlateNumber}" Placeholder="Enter your tank's plate number"
                                                PlaceholderColor="#385D7D" InputType="Numeric"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
 
-                <XFMatetrial:MaterialTextField Text="{Binding TankPlateNumber}" Placeholder="Enter your tank's plate number"
+                    <XFMatetrial:MaterialTextField Text="{Binding TankSize}" Placeholder="Enter your tank's size"
                                                PlaceholderColor="#385D7D" InputType="Numeric"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
-                
-                <XFMatetrial:MaterialTextField Text="{Binding TankSize}" Placeholder="Enter your tank's size"
-                                               PlaceholderColor="#385D7D" InputType="Numeric"
-                                              FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
-                
-                <XFMatetrial:MaterialTextField Text="{Binding TankColor}" Placeholder="Enter your tank's color"
+
+                    <XFMatetrial:MaterialTextField Text="{Binding TankColor}" Placeholder="Enter your tank's color"
                                                PlaceholderColor="#385D7D" InputType="Chat"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
-                
-                
-                <Button Text="Sing Up" Clicked="SingUpClicked" VerticalOptions="EndAndExpand"
+
+
+                    <Button Text="Sing Up" Clicked="SingUpClicked" VerticalOptions="EndAndExpand"
                         Background="#22A5FD" TextColor="White" 
                         CornerRadius="5" TextTransform="None" Margin="20,30"/>
-            </StackLayout>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

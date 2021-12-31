@@ -24,6 +24,7 @@ namespace Client.Mobile
         }
 
         public Timer timer { get; set; }
+        public Timer TimerUpdateLocation { get; set; }
         public MainPage()
         {
             InitializeComponent();
@@ -36,16 +37,29 @@ namespace Client.Mobile
             };
             timer.Elapsed += (s, e) => LoadConfigration().ConfigureAwait(false);
             timer.Start();
+
+            TimerUpdateLocation = new System.Timers.Timer();
+            TimerUpdateLocation.Interval = TimeSpan.FromSeconds(30).TotalMilliseconds;
+            TimerUpdateLocation.Elapsed += (s, e) => UpdateCurrentLocation().ConfigureAwait(false);
+            TimerUpdateLocation.Start();
         }
         public async Task LoadConfigration()
         {
             Client = await BLL.Services.FirebaseService.GetClient(AppStatic.ClientID);
             OnPropertyChanged(nameof(MotorToggled));
         }
+        public async Task UpdateCurrentLocation()
+        {
+            var CurentLocation = await Utils.Location.GetCurrentLocation(new System.Threading.CancellationTokenSource());
+            Client.latitude = CurentLocation.Latitude;
+            Client.longitude = CurentLocation.Longitude;
+            await BLL.Services.FirebaseService.UpdateClient(Client.id, Client).ConfigureAwait(false);
+        }
+
 
         private void OpenSupplierList(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new SupplierList());
+            Navigation.PushAsync(new SupplierList(Client));
         }
 
         private async void TriggerPumb(object sender, EventArgs e)

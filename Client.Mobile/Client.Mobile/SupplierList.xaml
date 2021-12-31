@@ -3,47 +3,92 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              NavigationPage.HasNavigationBar="False"             
              BackgroundImageSource="background_app"
+             xmlns:pages="clr-namespace:Client.Mobile"
              x:Class="Client.Mobile.SupplierList">
     <ContentPage.Content>
         <StackLayout Margin="0" Padding="10" Spacing="0">
-            <CollectionView ItemsSource="{Binding Suppliers}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Margin="0,10" HorizontalOptions="FillAndExpand">
-                            <Frame Margin="0" Padding="0" BackgroundColor="White"
+            <Grid x:Name="ListSupplierGrid" Margin="0" Padding="0">
+                <RefreshView x:Name="RefreshViewSupplier" Refreshing="RefreshListSupplier">
+                    <CollectionView ItemsSource="{Binding Suppliers}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Margin="0,10" HorizontalOptions="FillAndExpand">
+                                    <Frame Margin="0" Padding="0" BackgroundColor="White"
                                CornerRadius="5" HasShadow="True" BorderColor="#C4C4C4">
-                                <StackLayout Margin="0" Padding="0" Spacing="0">
-                                    <StackLayout Margin="10" Padding="0" Orientation="Horizontal">
-                                        <StackLayout Margin="0" Padding="0" Spacing="10" HorizontalOptions="FillAndExpand">
-                                            <Label Text="{Binding full_name,StringFormat='Name: {0}'}" TextColor="Black" FontAttributes="Bold"/>
-                                            <Label Text="{Binding phone_number,StringFormat='Phone: {0}'}" TextColor="Black" FontAttributes="Bold"/>
-                                            <StackLayout Orientation="Vertical" Margin="0" Padding="0" Spacing="10">
-                                                <Label Text="{Binding estimated_price,StringFormat='• Estimated Price: {0} JD/Meter'}" TextColor="Black" HorizontalOptions="StartAndExpand"/>
-                                                <Label Text="{Binding estimated_time,StringFormat='• Estimated Time: {0}'}" TextColor="Black" 
+                                        <StackLayout Margin="0" Padding="0" Spacing="0">
+                                            <StackLayout Margin="10" Padding="0" Orientation="Horizontal">
+                                                <StackLayout Margin="0" Padding="0" Spacing="10" HorizontalOptions="FillAndExpand">
+                                                    <Label Text="{Binding full_name,StringFormat='Name: {0}'}" TextColor="Black" FontAttributes="Bold"/>
+                                                    <Label Text="{Binding phone_number,StringFormat='Phone: {0}'}" TextColor="Black" FontAttributes="Bold"/>
+                                                    <StackLayout Orientation="Vertical" Margin="0" Padding="0" Spacing="10">
+                                                        <Label Text="{Binding estimated_price,StringFormat='• Estimated Price: {0} JD/Meter'}" TextColor="Black" HorizontalOptions="StartAndExpand"/>
+                                                        <Label Text="{Binding estimated_time,StringFormat='• Estimated Time: {0}'}" TextColor="Black" 
                                                        HorizontalOptions="Start"/>
-                                            </StackLayout>
-                                        </StackLayout>
-                                        <BoxView HeightRequest="10" WidthRequest="10" CornerRadius="5"
+                                                    </StackLayout>
+                                                </StackLayout>
+                                                <BoxView HeightRequest="10" WidthRequest="10" CornerRadius="5"
                                              HorizontalOptions="End" VerticalOptions="Start">
-                                            <BoxView.Triggers>
-                                                <DataTrigger TargetType="BoxView" Binding="{Binding available}" Value="True">
-                                                    <Setter Property="BackgroundColor" Value="Green"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="BoxView" Binding="{Binding available}" Value="False">
-                                                    <Setter Property="BackgroundColor" Value="Red"/>
-                                                </DataTrigger>
-                                            </BoxView.Triggers>
-                                        </BoxView>
-                                    </StackLayout>
-                                    <Button Text="Request Order" BackgroundColor="#548CA8" TextColor="White"
-                                            FontSize="Medium" FontAttributes="Bold" TextTransform="None"/>
+                                                    <BoxView.Triggers>
+                                                        <DataTrigger TargetType="BoxView" Binding="{Binding available}" Value="True">
+                                                            <Setter Property="BackgroundColor" Value="Green"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="BoxView" Binding="{Binding available}" Value="False">
+                                                            <Setter Property="BackgroundColor" Value="Red"/>
+                                                        </DataTrigger>
+                                                    </BoxView.Triggers>
+                                                </BoxView>
+                                            </StackLayout>
+                                            <Button Text="Request Order" BackgroundColor="#548CA8" TextColor="White"
+                                                Command="{Binding  Source={RelativeSource AncestorType={x:Type pages:SupplierList}}, Path=SendOrderRequestCommand}"
+                                                CommandParameter="{Binding .}"
+                                                IsVisible="{Binding available}" FontSize="Medium" 
+                                                FontAttributes="Bold" TextTransform="None"/>
+                                        </StackLayout>
+                                    </Frame>
+
                                 </StackLayout>
-                            </Frame>
-                            
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <StackLayout Margin="0" Padding="0">
+                                <Frame Margin="0" Padding="50,20" CornerRadius="5"  BackgroundColor="#A1F7F7F7" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                                    <StackLayout Margin="0" Padding="0" Spacing="20">
+                                        <ActivityIndicator IsVisible="{Binding Source={RelativeSource AncestorType={x:Type pages:SupplierList}}, Path=IsLoading}" IsRunning="{Binding Source={RelativeSource AncestorType={x:Type pages:SupplierList}}, Path=IsLoading}" Color="#2C49B5"/>
+                                        <Label TextColor="Black"  FontSize="Small" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type pages:SupplierList}}, Path=IsLoading}" Value="True">
+                                                    <Setter Property="Text" Value="Search..."/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Source={RelativeSource AncestorType={x:Type pages:SupplierList}}, Path=IsLoading}" Value="False">
+                                                    <Setter Property="Text" Value="There are no suppliers at this time, please try again later"/>
+                                                    <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </RefreshView>
+                <StackLayout Margin="0" Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                             IsVisible="{Binding Source={x:Reference MessageFrame},Path=IsVisible}">
+                    <Frame Margin="0" Padding="10" CornerRadius="5" 
+                           BackgroundColor="#F7F7F7" x:Name="MessageFrame" IsVisible="false"
+                           HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                        <StackLayout Margin="0" Padding="0" Spacing="10" HorizontalOptions="FillAndExpand">
+                            <StackLayout Orientation="Horizontal" Margin="0" Padding="0" Spacing="20" HorizontalOptions="Center">
+                                <ActivityIndicator IsRunning="True" Color="#2C49B5" HeightRequest="32" WidthRequest="32" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                <Label Text="watting supplier's reponse" TextColor="Black"  FontSize="Small" VerticalTextAlignment="Center" HorizontalOptions="StartAndExpand"/>
+                            </StackLayout>
+                            <Label x:Name="MessageText" Text="remain 3 minutes before cancelled your request" 
+                               HorizontalTextAlignment="Center" TextColor="Black"  FontSize="Small" VerticalTextAlignment="Center"/>
+                            <Label Text="(please don't leave this page)"
+                               HorizontalTextAlignment="Center" TextColor="Black"  FontSize="Small" VerticalTextAlignment="Center" />
                         </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    </Frame>
+                </StackLayout>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

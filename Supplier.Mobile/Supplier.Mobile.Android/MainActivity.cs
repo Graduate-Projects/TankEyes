@@ -27,7 +27,7 @@ namespace Supplier.Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             XF.Material.Droid.Material.Init(this, savedInstanceState);
             CrossFirebase.Initialize(this, savedInstanceState, CreateCrossFirebaseSettings());
-            FirebaseApp.InitializeApp(Application.Context);
+            FirebaseApp.InitializeApp(Application.Context); 
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
