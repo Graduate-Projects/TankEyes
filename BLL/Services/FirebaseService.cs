@@ -23,6 +23,19 @@ namespace BLL.Services
                 throw ex;
             }
         }
+        public static async Task<Models.Supplier> GetSupplier(string UserID)
+        {
+            try
+            {
+                var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
+                var supplier_info = await firebase.Child("suppliers").Child(UserID).OnceSingleAsync<BLL.Models.Supplier>();
+                return supplier_info;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static async Task UpdateClient(string UserID, BLL.Models.Client client)
         {
             try
@@ -67,7 +80,7 @@ namespace BLL.Services
             {
                 var firebase = new FirebaseClient(BLL.Configration.FirebaseConfigration.DatabaseURL);
                 var values = await firebase.Child("suppliers").OnceSingleAsync<Dictionary<string, BLL.Models.Supplier>>();
-                var suppliers = values.Select(item => item.Value)?.ToList();
+                var suppliers = values?.Select(item => item.Value)?.ToList();
                 return suppliers;
             }
             catch (Exception ex)

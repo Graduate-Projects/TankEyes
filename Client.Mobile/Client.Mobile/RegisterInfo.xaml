@@ -27,8 +27,8 @@
                                  TextColor="DarkBlue" FontSize="Medium" FontAttributes="Bold"/>
                     </XFMatetrial:MaterialCard>
                 </StackLayout>
-                
-                <XFMatetrial:MaterialTextField Text="{Binding TankSize}" Placeholder="Enter your tank's dimensions (m^3)"
+
+                <XFMatetrial:MaterialTextField Text="{Binding TankSize}" Placeholder="Enter your tank's dimensions (m³)"
                                                PlaceholderColor="#385D7D" InputType="Numeric"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
 

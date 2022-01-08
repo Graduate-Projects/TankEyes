@@ -36,6 +36,11 @@ namespace Client.Mobile
                 await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.Camera>();
                 await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.Flashlight>();
             }
+            var status_location = await Xamarin.Essentials.Permissions.CheckStatusAsync<Xamarin.Essentials.Permissions.LocationWhenInUse>();
+            if (status_location != Xamarin.Essentials.PermissionStatus.Granted)
+            {
+                await Xamarin.Essentials.Permissions.RequestAsync<Xamarin.Essentials.Permissions.LocationWhenInUse>();
+            }
 
             var ClientID = await Xamarin.Essentials.SecureStorage.GetAsync("ClientID");
 #if DEBUG

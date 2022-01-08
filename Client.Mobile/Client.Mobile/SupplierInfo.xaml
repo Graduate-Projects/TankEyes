@@ -1,12 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="White"
              x:Class="Client.Mobile.SupplierInfo">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid Margin="0" Padding="0">
+            <Image Source="water_tank" HorizontalOptions="Center" VerticalOptions="EndAndExpand"
+               Margin="0,0,0,-50"/>
+            <StackLayout Margin="0" Padding="10" Spacing="30" VerticalOptions="CenterAndExpand">
+                <Frame Margin="0" Padding="10" BackgroundColor="#CAFFFFFF" CornerRadius="5">
+                    <StackLayout Margin="0" Padding="0" Spacing="10">
+                        <Label Text="Supplier Information" TextColor="Black" FontAttributes="Bold" TextDecorations="Underline"/>
+                        <StackLayout Margin="0" Padding="10" Spacing="10">
+                            <Label Text="{Binding Supplier_Profile.full_name,StringFormat='Name: {0}'}" FontAttributes="Bold"  TextColor="Black"/>
+                            <Label Text="{Binding Supplier_Profile.phone_number,StringFormat='Phone Number: {0}'}" FontAttributes="Bold"  TextColor="Black">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding DialUpCommand}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                <Frame Margin="0" Padding="10" BackgroundColor="#CAFFFFFF" CornerRadius="5">
+                    <StackLayout Margin="0" Padding="0" Spacing="10">
+                        <Label Text="General Information" TextColor="Black" FontAttributes="Bold" TextDecorations="Underline"/>
+                        <StackLayout Margin="0" Padding="10" Spacing="10">
+                            <Label Text="{Binding Supplier_Profile.estimated_price,StringFormat='Estimated Price: {0} JD/Meter'}"  FontAttributes="Bold"  TextColor="Black"/>
+                            <Label Text="{Binding estimated_time,StringFormat='Estimated Time: {0}'}"  FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding number_order_finished,StringFormat='The number of orders completed: {0}'}"  FontAttributes="Bold"  TextColor="Black"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                <Frame Margin="0" Padding="10" BackgroundColor="#CAFFFFFF" CornerRadius="5">
+                    <StackLayout Margin="0" Padding="0" Spacing="10">
+                        <Label Text="Tank Information" TextColor="Black" FontAttributes="Bold" TextDecorations="Underline"/>
+                        <StackLayout Margin="0" Padding="10" Spacing="10">
+                            <Label Text="{Binding Supplier_Profile.tank_color,StringFormat='Tank Color: {0}'}" FontAttributes="Bold"  TextColor="Black"/>
+                            <Label Text="{Binding Supplier_Profile.tank_size,StringFormat='Tank Size: {0} m³'}" FontAttributes="Bold"  TextColor="Black"/>
+                            <Label Text="{Binding Supplier_Profile.tank_plate_number,StringFormat='Plate Number: {0}'}" FontAttributes="Bold"  TextColor="Black"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                <StackLayout Margin="0" Padding="0" Spacing="10" VerticalOptions="EndAndExpand">
+                    <Button Text="Finish" BackgroundColor="#00CBAB" TextColor="White" FontSize="Medium" 
+                            CornerRadius="5" FontAttributes="Bold" TextTransform="None" HorizontalOptions="FillAndExpand"
+                            Clicked="FinishOrder"/>
+                    <Button Text="Cancelled" BackgroundColor="#FF6A63" TextColor="White" FontSize="Medium" 
+                            CornerRadius="5" FontAttributes="Bold" TextTransform="None" HorizontalOptions="FillAndExpand"
+                            Clicked="CancelledOrder"/>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

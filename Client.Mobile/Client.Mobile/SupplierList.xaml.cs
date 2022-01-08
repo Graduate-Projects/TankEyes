@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,13 +44,14 @@ namespace Client.Mobile
             SendOrderRequestCommand = new Command<BLL.Models.Supplier>((supplier) => SendOrderRequest(supplier));
             LoadOrderWatting().ConfigureAwait(false);
             LoadConfigration().ConfigureAwait(false);
+            
             timer = new System.Timers.Timer();
             timer.Interval = TimeSpan.FromSeconds(30).TotalMilliseconds;
             timer.Elapsed += (s, e) => LoadConfigration().ConfigureAwait(false);
             timer.Start();
         }
 
-        private async Task LoadOrderWatting()
+        private async Task LoadOrderWatting(bool can_show_message = true)
         {
             var order_client = await BLL.Services.FirebaseService.GetOrdersClientsAsync(_client.id);
             var order_watting = order_client.FirstOrDefault(item => item.status == BLL.Enums.OrderStatus.Watting);
@@ -57,11 +59,16 @@ namespace Client.Mobile
             {
                 if (order_watting.is_supplier_accepted)
                 {
-
+                    var supplier_profile = await BLL.Services.FirebaseService.GetSupplier(order_watting.supplier_id);
+                    await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(async() =>
+                    {
+                        await App.Current.MainPage.Navigation.PushAsync(new SupplierInfo(order_watting, supplier_profile));
+                        App.Current.MainPage.Navigation.RemovePage(this);
+                    });
                 }
                 else
                 {
-                    UI_ORDER_DESIGN(order_watting.id, order_watting);
+                   if(can_show_message) UI_ORDER_DESIGN(order_watting.id, order_watting);
                 }
             }
         }
@@ -86,7 +93,7 @@ namespace Client.Mobile
                 }
             }
 
-            Suppliers = suppliers_after_filter.OrderBy(item=>item.available).ToList();
+            Suppliers = suppliers_after_filter.OrderByDescending(item=>item.available).ToList();
             RefreshViewSupplier.IsRefreshing = false;
             IsLoading = false;
         }
@@ -110,6 +117,7 @@ namespace Client.Mobile
                 status = BLL.Enums.OrderStatus.Watting
             };
             await BLL.Services.FirebaseService.AddNewOrder(order_id, order).ConfigureAwait(false);
+            SendNotification("New Order", "You have new order, please check it..", supplier.id);
             UI_ORDER_DESIGN(order_id, order);
 
         }
@@ -120,29 +128,28 @@ namespace Client.Mobile
             loading_timer.Interval = TimeSpan.FromSeconds(1).TotalMilliseconds;
             loading_timer.Elapsed += async (s, e) =>
             {
-                if(!(App.Current.MainPage.Navigation.NavigationStack.Last() is SupplierList))
+                if (!(App.Current.MainPage.Navigation.NavigationStack.Last() is SupplierList))
                 {
-                    loading_timer.Stop(); 
+                    loading_timer.Stop();
                     loading_timer.Dispose();
-                }
-                var period_time = 3 * 60 - (int)DateTime.Now.Subtract(start_time).TotalSeconds;
-                if (period_time >= 60)
-                {
-                    await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(() =>
-                    MessageText.Text = String.Format("remain {0:00}:{1:00} minutes before cancelled your request", period_time / 60, period_time % 60));
-                }
-                else if (period_time > 0)
-                {
-                    await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(() =>
-                    MessageText.Text = String.Format("remain {0:00} second before cancelled your request", period_time));
                 }
                 else
                 {
-                    loading_timer.Stop();
-                    order.status = BLL.Enums.OrderStatus.Cancelled;
-                    await BLL.Services.FirebaseService.UpdateOrder(order_id, order).ConfigureAwait(false);
-                    await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(() => MessageFrame.IsVisible = false);
-                    loading_timer.Dispose();
+                    var period_time = 3 * 60 - (int)DateTime.Now.Subtract(start_time).TotalSeconds;
+                    if (period_time % 15 == 0) await LoadOrderWatting(false).ConfigureAwait(false); //CHECK UPDATE ORDERING EVERY 15 SECONDS
+                    if (period_time >= 60)
+                    {
+                        await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(() =>
+                        MessageText.Text = String.Format("remain {0:c} before cancelled your request", TimeSpan.FromSeconds(period_time)));
+                    }
+                    else
+                    {
+                        loading_timer.Stop();
+                        order.status = BLL.Enums.OrderStatus.Cancelled;
+                        await BLL.Services.FirebaseService.UpdateOrder(order_id, order).ConfigureAwait(false);
+                        await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(() => MessageFrame.IsVisible = false);
+                        loading_timer.Dispose();
+                    }
                 }
             };
             loading_timer.Start();
@@ -152,5 +159,35 @@ namespace Client.Mobile
         {
             LoadConfigration().ConfigureAwait(false);
         }
+        private async void SendNotification(string title, string message,string tag)
+        {
+            try
+            {
+                using (var httpClient = new System.Net.Http.HttpClient())
+                {
+                    var response = await httpClient.PostAsJsonAsync("https://tank-eyes.azurewebsites.net/api/Notifications/requests", new BLL.Models.Notification.NotificationRequest
+                    {
+                        Title = title,
+                        Text = message,
+                        Tags = new string[] { BLL.Extensions.Tags.Validation(tag) },
+                        Silent = false
+                    });
+
+                    try
+                    {
+                        response.EnsureSuccessStatusCode();
+                    }
+                    catch (Exception ex)
+                    {
+                        Utils.Diagnostic.Log(ex);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.Diagnostic.Log(ex);
+            }
+        }
+
     }
 }

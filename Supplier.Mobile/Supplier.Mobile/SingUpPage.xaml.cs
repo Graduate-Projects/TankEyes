@@ -103,6 +103,8 @@ namespace Supplier.Mobile
                     work_location = RegionSelected
                 };
                 await BLL.Services.FirebaseService.AddNewSupplier(Uuid, supplierProfile);
+                AppStatic.PhoneNumber = PhoneNumber;
+                AppStatic.SupplierID = Uuid;
                 App.Current.MainPage = new NavigationPage(new MainPage(supplierProfile));
             }
             catch (Exception)

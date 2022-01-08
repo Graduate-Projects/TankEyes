@@ -22,13 +22,14 @@ namespace Supplier.Mobile
         {
             AppStatic.PhoneNumber = PhoneNumber;
             var suppliers = await BLL.Services.FirebaseService.GetAllSuppliersAsync().ConfigureAwait(true);
-            var supplierProfile = suppliers.FirstOrDefault(spp => spp.phone_number == PhoneNumber);
+            var supplierProfile = suppliers?.FirstOrDefault(spp => spp.phone_number == PhoneNumber);
             if (supplierProfile == null)
             {
                 App.Current.MainPage = new SingUpPage(PhoneNumber);
             }
             else
             {
+                AppStatic.SupplierID = supplierProfile.id;
                 App.Current.MainPage = new NavigationPage(new MainPage(supplierProfile));
             }
         }

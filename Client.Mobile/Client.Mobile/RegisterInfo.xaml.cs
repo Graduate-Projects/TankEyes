@@ -60,7 +60,7 @@ namespace Client.Mobile
             }
             catch (Exception ex)
             {
-                //Utils.Diagnostic.Log(ex);
+                Utils.Diagnostic.Log(ex);
             }
         }
 
@@ -71,6 +71,7 @@ namespace Client.Mobile
             {
                 var client = new BLL.Models.Client
                 {
+                    id = AppStatic.ClientID,
                     full_name = FullName,
                     phone_number = PhoneNumber,
                     tank_size = TankSize,
@@ -79,9 +80,9 @@ namespace Client.Mobile
                 await BLL.Services.FirebaseService.AddNewClient(AppStatic.ClientID, client);
                 App.Current.MainPage = new NavigationPage(new MainPage());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Utils.Diagnostic.Log(ex);
             }
         }
     }

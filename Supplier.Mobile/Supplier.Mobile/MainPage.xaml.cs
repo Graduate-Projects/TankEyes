@@ -48,7 +48,7 @@ namespace Supplier.Mobile
             RejectRequestCommand = new Command(() => RejectRequest());
             CancelledRequestCommand = new Command(() => CancelledRequest());
             OpenDirectionCommand = new Command(() => OpenDirection().ConfigureAwait(false));
-            DialUpCommand = new Command(() => DialUp().ConfigureAwait(false));;
+            DialUpCommand = new Command(() => DialUp().ConfigureAwait(false));
             this.BindingContext = this;
 
             TimerUpdateLocation = new System.Timers.Timer();
@@ -67,17 +67,9 @@ namespace Supplier.Mobile
             {
                 PhoneDialer.Open(ClientRequest.phone_number);
             }
-            catch (ArgumentNullException anEx)
-            {
-
-            }
-            catch (FeatureNotSupportedException ex)
-            {
-
-            }
             catch (Exception ex)
             {
-
+                Utils.Diagnostic.Log(ex);
             }
         }
         private async Task OpenDirection()
@@ -91,25 +83,33 @@ namespace Supplier.Mobile
             }
             catch (Exception ex)
             {
-
+                Utils.Diagnostic.Log(ex);
             }
         }
 
         private async void AcceptRequest()
         {
-            RequestOrder.IsVisible = false;
-            OrderRequest.is_supplier_accepted = true;
-            OrderRequest.status = BLL.Enums.OrderStatus.Watting;
-            BLL.Services.FirebaseService.UpdateOrder(OrderRequest.id, OrderRequest);
-            ClientRequest = await BLL.Services.FirebaseService.GetClient(OrderRequest.client_id);
-            MessageSearch.IsVisible = false;
-            InfoOrder.IsVisible = true;
+            try
+            {
+                RequestOrder.IsVisible = false;
+                OrderRequest.is_supplier_accepted = true;
+                OrderRequest.status = BLL.Enums.OrderStatus.Watting;
+                BLL.Services.FirebaseService.UpdateOrder(OrderRequest.id, OrderRequest);
+                ClientRequest = await BLL.Services.FirebaseService.GetClient(OrderRequest.client_id);
+                MessageSearch.IsVisible = false;
+                InfoOrder.IsVisible = true;
 
-            SendNotification("Order has been accepted", $"The service provider ({Supplier.full_name}) is going to your house right now, thank you");
+                SendNotification("Order has been accepted", $"The service provider ({Supplier.full_name}) is going to your house right now, thank you");
+            }
+            catch (Exception ex)
+            {
+                Utils.Diagnostic.Log(ex);
+            }        
         }
 
         private void RejectRequest()
         {
+            try { 
             RequestOrder.IsVisible = false;
             OrderRequest.is_supplier_accepted = false;
             OrderRequest.status = BLL.Enums.OrderStatus.Rejected;
@@ -117,9 +117,15 @@ namespace Supplier.Mobile
             MessageSearch.IsVisible = true;
 
             SendNotification("Order has been rejected", $"The service provider ({Supplier.full_name}) reject your order due to some circumstance, we apologize");
+            }
+            catch (Exception ex)
+            {
+                Utils.Diagnostic.Log(ex);
+            }
         }
         private async void CancelledRequest()
         {
+            try { 
             var result = await MaterialDialog.Instance.ConfirmAsync(message: "Are you sure you want to cancel this order?", confirmingText: "Yes, Sure", dismissiveText: "No");
             if (result != null)
             {
@@ -132,10 +138,16 @@ namespace Supplier.Mobile
                     SendNotification("Order has been cancelled", $"The service provider ({Supplier.full_name}) canceled your order due to some circumstance, we apologize");
                 }
             }
+            }
+            catch (Exception ex)
+            {
+                Utils.Diagnostic.Log(ex);
+            }
         }
 
         private async Task LoadOrderWatting()
         {
+            try { 
             var order_supplier = await BLL.Services.FirebaseService.GetOrdersSupplierAsync(Supplier.id);
             var is_reserved = order_supplier.Any(item => item.status == BLL.Enums.OrderStatus.Watting && item.is_supplier_accepted);
             if (!is_reserved)
@@ -145,13 +157,23 @@ namespace Supplier.Mobile
                 {
                     await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(async () =>
                     {
-                        CrossMediaManager.Current.Play("notification.mp3");
+                        //await CrossMediaManager.Current.Play("notification.mp3");
                         MessageSearch.IsVisible = false;
                         RequestOrder.IsVisible = true;
                         OrderRequest = order_watting;
                     });
 
                 }
+                else
+                {
+                        await Xamarin.Essentials.MainThread.InvokeOnMainThreadAsync(async () =>
+                        {
+                            //await CrossMediaManager.Current.Play("notification.mp3");
+                            MessageSearch.IsVisible = true;
+                            RequestOrder.IsVisible = false;
+                            OrderRequest = null;
+                        });
+                    }
             }
             else
             {
@@ -166,19 +188,36 @@ namespace Supplier.Mobile
                     //add this client to list clients with cancelled button
                 });
             }
+            }
+            catch (Exception ex)
+            {
+                Utils.Diagnostic.Log(ex);
+            }
         }
 
         public async Task UpdateCurrentLocation()
         {
-            var CurentLocation = await Utils.Location.GetCurrentLocation(new System.Threading.CancellationTokenSource ());
+            try { 
+            var CurentLocation = await Utils.Location.GetCurrentLocation(new System.Threading.CancellationTokenSource());
             Supplier.latitude = CurentLocation.Latitude;
             Supplier.longitude = CurentLocation.Longitude;
             await BLL.Services.FirebaseService.UpdateSupplier(Supplier.id, Supplier).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Utils.Diagnostic.Log(ex);
+            }
         }
 
         private async void ToggleAvailability(object sender, ToggledEventArgs e)
         {
+            try { 
             await BLL.Services.FirebaseService.UpdateSupplier(Supplier.id, Supplier);
+            }
+            catch (Exception ex)
+            {
+                Utils.Diagnostic.Log(ex);
+            }
         }
 
         private async void SendNotification(string title, string message)
@@ -191,7 +230,7 @@ namespace Supplier.Mobile
                     {
                         Title = title,
                         Text = message,
-                        Tags = new string[] { ClientRequest.id.Replace("-","") },
+                        Tags = new string[] { BLL.Extensions.Tags.Validation(OrderRequest.client_id) },
                         Silent = false
                     });
 
@@ -201,12 +240,13 @@ namespace Supplier.Mobile
                     }
                     catch (Exception ex)
                     {
+                        Utils.Diagnostic.Log(ex);
                     }
                 }
             }
             catch (Exception ex)
             {
-
+                Utils.Diagnostic.Log(ex);
             }
         }
     }

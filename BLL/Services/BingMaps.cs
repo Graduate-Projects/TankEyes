@@ -31,7 +31,7 @@ namespace BLL.Services
                     return TimeSpan.FromSeconds(travelDuration);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return TimeSpan.FromSeconds(0);
             }

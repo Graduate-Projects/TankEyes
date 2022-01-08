@@ -33,7 +33,7 @@ namespace Supplier.Mobile
                 {
                     await Xamarin.Essentials.SecureStorage.SetAsync("PhoneNumber", PhoneNumber);
                     var suppliers = await BLL.Services.FirebaseService.GetAllSuppliersAsync();
-                    var supplierProfile = suppliers.FirstOrDefault(spp => spp.phone_number == PhoneNumber);
+                    var supplierProfile = suppliers?.FirstOrDefault(spp => spp.phone_number == PhoneNumber);
                     if (supplierProfile == null)
                     {
                         App.Current.MainPage = new SingUpPage(PhoneNumber);

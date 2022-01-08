@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -23,7 +24,7 @@ namespace Client.Mobile
             set { if (value != Client.auto) { SwitchChanged(value); OnPropertyChanged(); } }
         }
 
-        public Timer timer { get; set; }
+        public Timer TimerGetUpdateProfile { get; set; }
         public Timer TimerUpdateLocation { get; set; }
         public MainPage()
         {
@@ -31,12 +32,11 @@ namespace Client.Mobile
             this.BindingContext = this;
 
             LoadConfigration().ConfigureAwait(false);
-            timer = new Timer
-            {
-                Interval = 100
-            };
-            timer.Elapsed += (s, e) => LoadConfigration().ConfigureAwait(false);
-            timer.Start();
+
+            TimerGetUpdateProfile = new System.Timers.Timer();
+            TimerGetUpdateProfile.Interval = TimeSpan.FromMilliseconds(100).TotalMilliseconds;
+            TimerGetUpdateProfile.Elapsed += (s, e) => LoadConfigration().ConfigureAwait(false);
+            TimerGetUpdateProfile.Start();
 
             TimerUpdateLocation = new System.Timers.Timer();
             TimerUpdateLocation.Interval = TimeSpan.FromSeconds(30).TotalMilliseconds;
@@ -46,6 +46,12 @@ namespace Client.Mobile
         public async Task LoadConfigration()
         {
             Client = await BLL.Services.FirebaseService.GetClient(AppStatic.ClientID);
+            if(Client.Notification == 1)
+            {
+                SendNotification("Water level", "The water level inside your tank is too low please fill up your tank to avoid the pump from burning out");
+                Client.Notification = 0;
+                await BLL.Services.FirebaseService.UpdateClient(Client.id, Client).ConfigureAwait(false);
+            }
             OnPropertyChanged(nameof(MotorToggled));
         }
         public async Task UpdateCurrentLocation()
@@ -82,5 +88,36 @@ namespace Client.Mobile
                 SwitchMotorAuto.IsToggled = !Value;
             }
         }
+
+        private async void SendNotification(string title, string message)
+        {
+            try
+            {
+                using (var httpClient = new System.Net.Http.HttpClient())
+                {
+                    var response = await httpClient.PostAsJsonAsync("https://tank-eyes.azurewebsites.net/api/Notifications/requests", new BLL.Models.Notification.NotificationRequest
+                    {
+                        Title = title,
+                        Text = message,
+                        Tags = new string[] { BLL.Extensions.Tags.Validation(Client.id) },
+                        Silent = false
+                    });
+
+                    try
+                    {
+                        response.EnsureSuccessStatusCode();
+                    }
+                    catch (Exception ex)
+                    {
+                        Utils.Diagnostic.Log(ex);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.Diagnostic.Log(ex);
+            }
+        }
+
     }
 }

@@ -35,17 +35,25 @@ namespace Supplier.Mobile
 
         private async Task StartUpPage()
         {
-            var PhoneNumber = await Xamarin.Essentials.SecureStorage.GetAsync("PhoneNumber");
-#if DEBUG
-            PhoneNumber = "+962785461900";
-#endif
-            if (string.IsNullOrEmpty(PhoneNumber))
+            var IsFirstTime = await Xamarin.Essentials.SecureStorage.GetAsync("IsFirstTime");
+            if (string.IsNullOrEmpty(IsFirstTime))
             {
-                MainPage = new NavigationPage(new SignInPage());
+                MainPage = new Walkthrough();
             }
             else
             {
-                MainPage = new LoadingProfileUser(PhoneNumber);
+                var PhoneNumber = await Xamarin.Essentials.SecureStorage.GetAsync("PhoneNumber");
+#if DEBUG
+                PhoneNumber = "+962785461900";
+#endif
+                if (string.IsNullOrEmpty(PhoneNumber))
+                {
+                    MainPage = new NavigationPage(new SignInPage());
+                }
+                else
+                {
+                    MainPage = new LoadingProfileUser(PhoneNumber);
+                }
             }
         }
         protected override void OnStart()

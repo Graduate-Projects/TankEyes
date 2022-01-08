@@ -24839,31 +24839,34 @@ namespace Client.Mobile.Droid
 			public const int tooltip_frame_light = 2131165366;
 			
 			// aapt resource value: 0x7F0700B7
-			public const int xf_arrow_dropdown = 2131165367;
+			public const int water_tank = 2131165367;
 			
 			// aapt resource value: 0x7F0700B8
-			public const int xf_arrow_right = 2131165368;
+			public const int xf_arrow_dropdown = 2131165368;
 			
 			// aapt resource value: 0x7F0700B9
-			public const int xf_check = 2131165369;
+			public const int xf_arrow_right = 2131165369;
 			
 			// aapt resource value: 0x7F0700BA
-			public const int xf_checkbox_selected = 2131165370;
+			public const int xf_check = 2131165370;
 			
 			// aapt resource value: 0x7F0700BB
-			public const int xf_checkbox_unselected = 2131165371;
+			public const int xf_checkbox_selected = 2131165371;
 			
 			// aapt resource value: 0x7F0700BC
-			public const int xf_clear = 2131165372;
+			public const int xf_checkbox_unselected = 2131165372;
 			
 			// aapt resource value: 0x7F0700BD
-			public const int xf_error = 2131165373;
+			public const int xf_clear = 2131165373;
 			
 			// aapt resource value: 0x7F0700BE
-			public const int xf_radio_button_selected = 2131165374;
+			public const int xf_error = 2131165374;
 			
 			// aapt resource value: 0x7F0700BF
-			public const int xf_radio_button_unselected = 2131165375;
+			public const int xf_radio_button_selected = 2131165375;
+			
+			// aapt resource value: 0x7F0700C0
+			public const int xf_radio_button_unselected = 2131165376;
 			
 			static Drawable()
 			{

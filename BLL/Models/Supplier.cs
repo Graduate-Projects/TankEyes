@@ -21,6 +21,6 @@ namespace BLL.Models
         public double latitude { get; set; }
 
         [JsonIgnore]
-        public string estimated_time { get; set; }
+        public string estimated_time { get; set; } = "--:--:--";
     }
 }
