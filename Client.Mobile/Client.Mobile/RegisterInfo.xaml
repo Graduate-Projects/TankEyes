@@ -32,7 +32,7 @@
                                                PlaceholderColor="#385D7D" InputType="Numeric"
                                               FloatingPlaceholderColor="#22A5FD" UnderlineColor="#22A5FD" TintColor="#22A5FD"/>
 
-                <Button Text="Sing Up" Clicked="SingUpClicked" VerticalOptions="EndAndExpand"
+                <Button Text="Sign Up" Clicked="SingUpClicked" VerticalOptions="EndAndExpand"
                         Background="#22A5FD" TextColor="White" 
                         CornerRadius="5" TextTransform="None" Margin="20,30"/>
             </StackLayout>

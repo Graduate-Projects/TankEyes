@@ -48,6 +48,12 @@ namespace Client.Mobile
             TimerCalculateRemainTime.Interval = TimeSpan.FromSeconds(5).TotalMilliseconds;
             TimerCalculateRemainTime.Elapsed += (s, e) => LoadNewLocation().ConfigureAwait(false);
             TimerCalculateRemainTime.Start();
+
+            LoadOrderSupplier(supplier_profile.id).ConfigureAwait(false);
+
+            MessagingCenter.Subscribe<App>(this,"OrderHasCancelled", (sender) => {
+                App.Current.MainPage.Navigation.PopAsync();
+            });
         }
         private async Task DialUp()
         {

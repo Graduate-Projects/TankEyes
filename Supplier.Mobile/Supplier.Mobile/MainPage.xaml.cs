@@ -147,7 +147,8 @@ namespace Supplier.Mobile
 
         private async Task LoadOrderWatting()
         {
-            try { 
+            try 
+            { 
             var order_supplier = await BLL.Services.FirebaseService.GetOrdersSupplierAsync(Supplier.id);
             var is_reserved = order_supplier.Any(item => item.status == BLL.Enums.OrderStatus.Watting && item.is_supplier_accepted);
             if (!is_reserved)
@@ -160,6 +161,7 @@ namespace Supplier.Mobile
                         //await CrossMediaManager.Current.Play("notification.mp3");
                         MessageSearch.IsVisible = false;
                         RequestOrder.IsVisible = true;
+                        InfoOrder.IsVisible = false;
                         OrderRequest = order_watting;
                     });
 
@@ -171,6 +173,7 @@ namespace Supplier.Mobile
                             //await CrossMediaManager.Current.Play("notification.mp3");
                             MessageSearch.IsVisible = true;
                             RequestOrder.IsVisible = false;
+                            InfoOrder.IsVisible = false;
                             OrderRequest = null;
                         });
                     }

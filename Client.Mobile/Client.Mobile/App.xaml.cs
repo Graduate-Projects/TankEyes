@@ -21,6 +21,7 @@ namespace Client.Mobile
         {
             INotificationManager service = DependencyService.Get<INotificationManager>();
             service.SendNotification(Notification.Title, Notification.Text);
+            if(Notification.Title.ToLower().Contains("order has been cancelled")) MessagingCenter.Send(this, "OrderHasCancelled");
         }
 
         private async Task StartUpPage()
